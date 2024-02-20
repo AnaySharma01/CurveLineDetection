@@ -9,6 +9,7 @@ def processImage(image):
     gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
     gray_scale = cv.GaussianBlur(gray, (15, 15), 0)
     median_blur = cv.medianBlur(gray_scale, 5)
+    #https://github.com/adityagandhamal/road-lane-detection/blob/master/detection_on_vid.py Line 36
     dilation = cv.dilate(median_blur, kernel=np.ones((2, 2), np.uint8))
     canny_image = cv.Canny(dilation, 50, 50)
 
