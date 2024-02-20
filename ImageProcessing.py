@@ -9,7 +9,8 @@ def processImage(image):
     gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
     gray_scale = cv.GaussianBlur(gray, (15, 15), 0)
     median_blur = cv.medianBlur(gray_scale, 5)
-    canny_image = cv.Canny(median_blur, 50, 50)
+    dilation = cv.dilate(median_blur, kernel=np.ones((2, 2), np.uint8))
+    canny_image = cv.Canny(dilation, 50, 50)
 
     # Creates a mask around desired area
     # https://pyimagesearch.com/2021/01/19/image-masking-with-opencv/ Lines 20-26
@@ -22,9 +23,9 @@ def processImage(image):
     #Creates the contours
     #https://www.geeksforgeeks.org/find-and-draw-contours-using-opencv-python/
     contour = contours, hierarchy = cv.findContours(mask,
-                                           cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
+                                           cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 
     # Prevents program from crashing if no lines detected
     if contour is not None:
         # Displays the lines
-        cv.drawContours(image, contours, -1, (0, 0, 255), 10)
+        cv.drawContours(image, contours, -1, (0, 0, 255), 15)
