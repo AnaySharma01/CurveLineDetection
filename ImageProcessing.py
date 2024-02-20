@@ -14,10 +14,10 @@ def processImage(image):
     # Creates a mask around desired area
     # https://pyimagesearch.com/2021/01/19/image-masking-with-opencv/ Lines 20-26
     roi = np.zeros(image.shape[:2], dtype="uint8")
-    cv.rectangle(roi, (20, 20), (400, 400), 1, -1)
+    cv.rectangle(roi, (200, 200), (850, 850), 1, -1)
     mask = cv.bitwise_and(canny_image, canny_image, mask=roi)
     # Displays the mask
-    cv.rectangle(image, (20, 20), (400, 400), (255, 0, 0), 5)
+    cv.rectangle(image, (200, 200), (850, 850), (255, 0, 0), 5)
 
     #Creates the contours
     #https://www.geeksforgeeks.org/find-and-draw-contours-using-opencv-python/
