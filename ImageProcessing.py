@@ -10,6 +10,7 @@ def processImage(image):
     #https://github.com/adityagandhamal/road-lane-detection/blob/master/detection_on_vid.py Line 36
     dilation = cv.dilate(median_blur, kernel=np.ones((2, 2), np.uint8))
     canny_image = cv.Canny(dilation, 50, 50)
+
     # Creates a mask around desired area
     # https://pyimagesearch.com/2021/01/19/image-masking-with-opencv/ Lines 20-26
     roi = np.zeros(image.shape[:2], dtype="uint8")
@@ -17,40 +18,11 @@ def processImage(image):
     mask = cv.bitwise_and(canny_image, canny_image, mask=roi)
     # Displays the mask
     cv.rectangle(image, (200, 200), (850, 850), (255, 0, 0), 5)
-
-    # Creates hough lines around image
-    # Creates the hough lines used for the line detection
-    # https://github.com/adityagandhamal/road-lane-detection/blob/master/detection_on_vid.py Line 42
-    lines = cv.HoughLinesP(mask, 1, np.pi/180, threshold=1, minLineLength=20, maxLineGap=10)
-
-    # Displays hough lines
-
-    # https://github.com/adityagandhamal/road-lane-detection/blob/master/detection_on_vid.py Line 14-19
-
+    #Creates the contours
+    #https://www.geeksforgeeks.org/find-and-draw-contours-using-opencv-python/
+    contour = contours, hierarchy = cv.findContours(mask,
+                                           cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
     # Prevents program from crashing if no lines detected
-    if lines is not None:
-        #Variables needed to find the centerline
-        slope_arr = []
-        lines_list = []
-        for line in lines:
-            #Creates array of lines
-            x1, y1, x2, y2 = line[0]
-            lines_list.append(line[0])
-            # Displays the lines
-            cv.line(image, (x1, y1), (x2, y2), (0, 0, 255), 15)
-            # https://www.geeksforgeeks.org/program-find-slope-line/ Line 4
-            #Calculates the slopes of the lines
-            slope = 0
-            if x2 - x1 != 0:
-                slope = (y2 - y1) / (x2 - x1)
-            slope_arr.append(slope)
-
-        # https://www.geeksforgeeks.org/python-nested-loops/ Example 2 Lines 3 and 7
-        #Loops through the slope array to calculate the centerline
-        for i in range(len(slope_arr)):
-            for j in range(len(slope_arr)):
-                x1, y1, x2, y2 = lines_list[i]
-                x3, y3, x4, y4 = lines_list[j]
-                #Calculates and displays the centerline
-                if slope > 1000 or slope < 1000:
-                    cv.line(image, ((x1 + x3)//2, (y1 + y3)//2), ((x2 + x4)//2, (y2 + y4)//2), (0, 0, 255), 15)
+    if contour is not None:
+        # Displays the lines
+        cv.drawContours(image, contours, -1, (0, 0, 255), 15)
