@@ -19,7 +19,7 @@ def processImage(image):
     # Creates hough lines around image
     # Creates the hough lines used for the line detection
     # https://github.com/adityagandhamal/road-lane-detection/blob/master/detection_on_vid.py Line 42
-    lines = cv.HoughLinesP(mask, 1, np.pi/180, threshold=1, minLineLength=20, maxLineGap=10)
+    lines = cv.HoughLinesP(mask, 1, np.pi/180, threshold=10, minLineLength=1, maxLineGap=15)
 
     # Displays hough lines
 
