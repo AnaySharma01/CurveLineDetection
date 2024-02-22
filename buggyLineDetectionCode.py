@@ -7,7 +7,7 @@ def processImage(image):
     gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
     gray_scale = cv.GaussianBlur(gray, (15, 15), 0)
     median_blur = cv.medianBlur(gray_scale, 5)
-    canny_image = cv.Canny(median_blur, 50, 50)
+    canny_image = cv.Canny(median_blur, 25, 25)
     # Creates a mask around desired area
     # https://pyimagesearch.com/2021/01/19/image-masking-with-opencv/ Lines 20-26
     roi = np.zeros(image.shape[:2], dtype="uint8")
@@ -35,7 +35,7 @@ def processImage(image):
             x1, y1, x2, y2 = line[0]
             lines_list.append(line[0])
             # Displays the lines
-            cv.line(image, (x1, y1), (x2, y2), (0, 0, 255), 15)
+            cv.line(image, (x1, y1), (x2, y2), (0, 0, 255), 1)
             # https://www.geeksforgeeks.org/program-find-slope-line/ Line 4
             #Calculates the slopes of the lines
             slope = 0
@@ -50,5 +50,5 @@ def processImage(image):
                 x1, y1, x2, y2 = lines_list[i]
                 x3, y3, x4, y4 = lines_list[j]
                 #Calculates and displays the centerline
-                if slope > 1000 or slope < 1000:
-                    cv.line(image, ((x1 + x3)//2, (y1 + y3)//2), ((x2 + x4)//2, (y2 + y4)//2), (0, 0, 255), 15)
+                # if slope > 1000 or slope < 1000:
+                #     cv.line(image, ((x1 + x3)//2, (y1 + y3)//2), ((x2 + x4)//2, (y2 + y4)//2), (0, 0, 255), 1)
