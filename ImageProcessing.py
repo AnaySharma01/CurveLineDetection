@@ -1,6 +1,7 @@
 # Imports necessary packages
 import cv2 as cv
 import numpy as np
+import math
 
 def processImage(image):
     # Applies gaussian blur, median blur, and canny edge detection on the image
@@ -33,13 +34,21 @@ def processImage(image):
             for j, point2 in enumerate(contours):
                 x1, y1 = point1[0, 0]
                 x2, y2 = point2[0, 0]
+                x3, y3 = point1[0, 0]
+                x4, y4 = point2[0, 0]
                 midpoint1 = (x1 + x2) // 2
                 midpoint2 = (y1 + y2) // 2
-                # cv.line(image, (x1, y1), (x2, y2), (0, 0, 255), 5)
-                # Calculates and displays the centerline
-                center_dots = cv.line(image, (midpoint1, midpoint2), (midpoint1, midpoint2), (0, 255, 0), 10)
+                midpoint3 = (x3 + x3) // 2
+                midpoint4 = (y4 + y4) // 2
 
+                cv.line(image, (x1, y1), (x2, y2), (0, 0, 255), 5)
+                #Calculates and displays the centerline
+                outer_dots = cv.line(image, (midpoint1, midpoint2), (midpoint1, midpoint2), (0, 255, 0), 10)
+                center_point1 = (midpoint1 + midpoint2)//2
+                center_point2 = (midpoint3 + midpoint4)//2
+                #https://www.w3schools.com/python/ref_math_dist.asp
+                line = cv.line(image, (center_point1, center_point2), (center_point1, center_point2), (0, 255, 0), 5)
                 #https://www.tutorialspoint.com/how-to-draw-polylines-on-an-image-in-opencv-using-python
-                points = np.array([[midpoint1,midpoint2],[midpoint1,midpoint2]])
-                pts = points.reshape(-1, 1, 2)
-                cv.polylines(image, [pts], isClosed=False, color=(0,0,0), thickness = 2)
+                points = np.array([[center_point1,center_point2],[center_point1,center_point2]])
+
+                cv.polylines(image, [points], isClosed=False, color=(0,0,255), thickness = 2)
