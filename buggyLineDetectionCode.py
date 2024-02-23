@@ -50,5 +50,4 @@ def processImage(image):
                 x1, y1, x2, y2 = lines_list[i]
                 x3, y3, x4, y4 = lines_list[j]
                 #Calculates and displays the centerline
-                # if slope > 1000 or slope < 1000:
-                #     cv.line(image, ((x1 + x3)//2, (y1 + y3)//2), ((x2 + x4)//2, (y2 + y4)//2), (0, 0, 255), 1)
+                cv.line(image, ((x1 + x3)//2, (y1 + y3)//2), ((x2 + x4)//2, (y2 + y4)//2), (0, 0, 255), 1)
