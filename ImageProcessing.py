@@ -40,6 +40,6 @@ def processImage(image):
                 center_dots = cv.line(image, (midpoint1, midpoint2), (midpoint1, midpoint2), (0, 255, 0), 10)
 
                 #https://www.tutorialspoint.com/how-to-draw-polylines-on-an-image-in-opencv-using-python
-                points = np.array([[100,20],[320,400]])
+                points = np.array([[midpoint1,midpoint2],[midpoint1,midpoint2]])
                 pts = points.reshape(-1, 1, 2)
                 cv.polylines(image, [pts], isClosed=False, color=(0,0,0), thickness = 2)
