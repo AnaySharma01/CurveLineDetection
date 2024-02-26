@@ -14,7 +14,7 @@ try:
     video = cv.VideoCapture(0)
 
     # While the video is playing, read the frame, process it & display it
-    while videoIsPlaying == True:
+    while videoIsPlaying:
         videoIsPlaying, frame = video.read()
         ImageProcessing.processImage(frame)
         ImageDisplaying.displayImage(frame)
